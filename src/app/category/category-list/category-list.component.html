@@ -1,0 +1,34 @@
+<div *ngIf="categories.length > 0; else noCategory">
+  <ng-template
+    [ngTemplateOutlet]="Categories"
+    [ngTemplateOutletContext]="{ categories: categories }"
+  ></ng-template>
+</div>
+
+<ng-template #Categories let-category="categories">
+  <div class="list-group">
+    <a
+      href="#"
+      class="list-group-item list-group-item-action"
+      (click)="selectCategory()"
+      [class.active]="displayAll"
+      routerLink="/products"
+    >
+      All Categories
+    </a>
+    <a
+      href="#"
+      class="list-group-item list-group-item-action"
+      *ngFor="let category of categories"
+      (click)="selectCategory(category)"
+      [class.active]="category == selectedCategory"
+      routerLink="/products/category/{{ category.id }}"
+    >
+      {{ category.name }}
+    </a>
+  </div>
+</ng-template>
+
+<ng-template #noCategory>
+  <div class="alert alert-warning">No Category</div>
+</ng-template>

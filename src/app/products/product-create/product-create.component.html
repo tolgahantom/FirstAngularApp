@@ -1,0 +1,105 @@
+<h3>Product Create</h3>
+
+<form (ngSubmit)="createProduct()" #form="ngForm">
+  <div class="alert alert-danger text-white mt-1" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input
+      [(ngModel)]="model.name"
+      type="text"
+      name="name"
+      id="name"
+      class="form-control"
+      required
+      minlength="5"
+      #name="ngModel"
+    />
+    <div class="text-danger mt-1" *ngIf="name.touched && name.invalid">
+      Your name must be longer than 5 characters.
+    </div>
+  </div>
+
+  <div>
+    <label for="price" class="form-label">Price</label>
+    <input
+      [(ngModel)]="model.price"
+      type="number"
+      name="price"
+      id="price"
+      class="form-control"
+      min="0"
+      max="10000000"
+      #price="ngModel"
+      required
+    />
+    <div class="text-danger mt-1" *ngIf="price.touched && price.invalid">
+      The price field cannot be empty(Min:0 Max:10000000)
+    </div>
+  </div>
+
+  <div>
+    <label for="imageUrl" class="form-label">Image Url</label>
+    <input
+      [(ngModel)]="model.imageUrl"
+      type="text"
+      name="imageUrl"
+      id="imageUrl"
+      class="form-control"
+      #imageUrl="ngModel"
+      required
+    />
+    <div class="text-danger mt-1" *ngIf="imageUrl.touched && imageUrl.invalid">
+      The image field cannot be empty
+    </div>
+  </div>
+
+  <div>
+    <label for="description" class="form-label">Description</label>
+    <ckeditor
+      [(ngModel)]="model.description"
+      name="description"
+      id="description"
+      required
+      #description="ngModel"
+    ></ckeditor>
+
+    <div
+      class="text-danger mt-1"
+      *ngIf="description.touched && description.invalid"
+    >
+      The description field cannot be empty
+    </div>
+  </div>
+
+  <div class="form-check my-3">
+    <input
+      [(ngModel)]="model.isActive"
+      class="form-check-input mb-3"
+      type="checkbox"
+      id="isActive"
+      name="isActive"
+    />
+    <label class="form-check-label" for="isActive"> isActive </label>
+  </div>
+
+  <div class="mb-3">
+    <select
+      [(ngModel)]="model.categoryId"
+      class="form-select"
+      name="categoryId"
+      id="categoryId"
+    >
+      <option value="0">Category</option>
+      <option value="{{ category.id }}" *ngFor="let category of categories">
+        {{ category.name }}
+      </option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+    Save Product
+  </button>
+</form>
